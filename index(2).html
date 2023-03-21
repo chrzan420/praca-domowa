@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body onload="create()"></body><!-- onload odpowiedzialna za uruchomienie skryptu budującego formularz po załadowaniu strony-->
+    <div id="element">
+    </div>
+    <script>
+
+
+        var licz = 1;//{liczby odpowiedzialne za tworzenie następnych formularzy
+        var licz2 = licz + 2;//}
+        function create() {
+            
+            const first = document.createElement('label');//tworzenie elementu label na stronę
+            first.innerText = "podaj liczbę od " + licz + "-" + licz2; //dodanie tekstu do elementu label
+            document.getElementById('element').appendChild(first); //podłączenie elementu label do diva na stronie
+            const att = document.createAttribute('id'); //tworezenie atrybutu elementu label
+            att.value = "del";//nadanie wartości atrybutowi
+            const att2 = document.createAttribute('for');//tworezenie atrybutu elementu label
+            att2.value = "liczba";//nadanie wartości atrybutowi
+            const label = document.getElementsByTagName("label")[0];
+            label.setAttributeNode(att);//nadanie atrybutu
+            const label2 = document.getElementById('del');
+            label2.setAttributeNode(att2);//nadanie atrybutu
+
+            const second = document.createElement('input');//tworzenie elementu input na stronę
+            document.getElementById('del').appendChild(second);//podłączenie elementu input do elementu label na stronie
+            const att3 = document.createAttribute('id');
+            att3.value = "num";
+            const att4 = document.createAttribute('type');//stworzenie typu elementu input
+            att4.value = "number";//nadanie wartości elementowu type
+            const label3 = document.getElementsByTagName('input')[0];
+            label3.setAttributeNode(att3);
+            const label4 = document.getElementById("num");
+            label4.setAttributeNode(att4);//dodanie elementu type
+
+            document.getElementById("num").onkeyup = function () { spr() }; // skrypt ciągle sprawdzający wartość wartość wpisaną w pole input
+
+
+            function spr() {// funkcja walidująca formularz
+                var num = document.getElementById('num').value;//pobranie wartości z pola input
+                if (num == licz || num == licz + 1 || num == licz + 2 && num != 0) {//sprawdzenie czy wartość miesci się w zakresie
+                    const kod = document.getElementById('del');
+                    kod.remove();//usunięcie starego formularza w celu stworzenia nowego
+                    licz = licz + 3;//inkrementacja 
+                    licz2 = licz + 2;
+                    create();//uruchomienie skryptu budującego formularz
+                }else{
+                    location.reload();
+                }
+    
+            }
+        }
+        
+
+    </script>
+</body>
+
+</html>
